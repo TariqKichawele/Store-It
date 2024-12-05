@@ -3,7 +3,7 @@ import React from 'react'
 
 const SignIn = () => {
   return (
-    <AuthForm />
+    <AuthForm type="sign-in" />
   )
 }
 
