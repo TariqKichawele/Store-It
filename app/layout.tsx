@@ -1,3 +1,4 @@
+import React from "react";
 import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins } from "next/font/google";
@@ -20,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} font-poppins antialiased`}>
+      <body className={`${poppins.variable} antialiased`}>
         {children}
       </body>
     </html>
