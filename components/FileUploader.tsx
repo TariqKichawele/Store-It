@@ -9,6 +9,7 @@ import { Button } from './ui/button'
 import Image from 'next/image'
 import { cn, convertFileToUrl, getFileType } from '@/lib/utils'
 import Thumbnail from './Thumbnail'
+import { uploadFile } from '@/lib/actions/fileActions'
 
 interface Props {
     ownerId: string
