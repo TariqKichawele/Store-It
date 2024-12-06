@@ -2,6 +2,7 @@ import { signOutUser } from '@/lib/actions/userActions';
 import React from 'react'
 import { Button } from './ui/button';
 import Image from 'next/image';
+import FileUploader from './FileUploader';
 
 const Header = ({
   userId,
@@ -14,7 +15,7 @@ const Header = ({
     <header className="header">
       Search
       <div className="header-wrapper">
-        FileUploader
+        <FileUploader ownerId={userId} accountId={accountId} />
         <form
           action={async () => {
             "use server";
