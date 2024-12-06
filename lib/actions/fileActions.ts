@@ -68,20 +68,20 @@ const createQueries = (
 ) => {
     const queries = [
         Query.or([
-            Query.equal('owner', [currentUser.$id]),
-            Query.equal('users', [currentUser.email])
+            Query.equal("owner", [currentUser.$id]),
+            Query.contains("users", [currentUser.email])
         ])
     ];
 
-    if(types.length > 0) queries.push(Query.equal('type', types));
-    if(searchText) queries.push(Query.contains('name', searchText));
+    if(types.length > 0) queries.push(Query.equal("type", types));
+    if(searchText) queries.push(Query.contains("name", searchText));
     if(limit) queries.push(Query.limit(limit));
 
     if(sort) {
         const [ sortBy, orderBy ] = sort.split('-');
 
         queries.push(
-            orderBy === 'asc' ? Query.orderAsc(sortBy) : Query.orderDesc(sortBy)
+            orderBy === "asc" ? Query.orderAsc(sortBy) : Query.orderDesc(sortBy)
         )
     };
 
