@@ -165,3 +165,26 @@ export const deleteFile = async ({
     }
 }
 
+export const updateFileUsers = async ({
+    fileId,
+    emails,
+    path
+} : UpdateFileUsersProps) => {
+    const { database } = await createAdminClient();
+
+    try {
+        const updatedFile = await database.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.filesCollectionId,
+            fileId,
+            { users: emails }
+        );
+
+        revalidatePath(path);
+
+        return parseStringify(updatedFile);
+    } catch (error) {
+        handleError(error, 'Failed to update file users');
+    }
+}
+
