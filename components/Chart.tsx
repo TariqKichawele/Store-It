@@ -2,9 +2,21 @@
 
 import React from 'react'
 import { ChartConfig, ChartContainer } from './ui/chart'
-import { Card, CardHeader, CardContent, CardTitle, CardDescription } from './ui/card';
+import { 
+    Card, 
+    CardHeader, 
+    CardContent, 
+    CardTitle, 
+    CardDescription 
+} from './ui/card';
 import { convertFileSize, calculatePercentage } from '@/lib/utils';
-import { Label, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart } from 'recharts';
+import { 
+    Label, 
+    PolarGrid, 
+    PolarRadiusAxis, 
+    RadialBar, 
+    RadialBarChart 
+} from 'recharts';
 
 const chartConfig = {
     size: {
@@ -45,36 +57,36 @@ const Chart = ({ used = 0 }: { used: number }) => {
                     <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
                         <Label
                             content={({ viewBox }) => {
-                            if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                                return (
-                                <text
-                                    x={viewBox.cx}
-                                    y={viewBox.cy}
-                                    textAnchor="middle"
-                                    dominantBaseline="middle"
-                                >
-                                    <tspan
-                                    x={viewBox.cx}
-                                    y={viewBox.cy}
-                                    className="chart-total-percentage"
+                                if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                                    return (
+                                    <text
+                                        x={viewBox.cx}
+                                        y={viewBox.cy}
+                                        textAnchor="middle"
+                                        dominantBaseline="middle"
                                     >
-                                    {used && calculatePercentage(used)
-                                        ? calculatePercentage(used)
-                                            .toString()
-                                            .replace(/^0+/, "")
-                                        : "0"}
-                                    %
-                                    </tspan>
-                                    <tspan
-                                    x={viewBox.cx}
-                                    y={(viewBox.cy || 0) + 24}
-                                    className="fill-white/70"
-                                    >
-                                    Space used
-                                    </tspan>
-                                </text>
-                                );
-                            }
+                                        <tspan
+                                            x={viewBox.cx}
+                                            y={viewBox.cy}
+                                            className="chart-total-percentage"
+                                        >
+                                            {used && calculatePercentage(used)
+                                                ? calculatePercentage(used)
+                                                    .toString()
+                                                    .replace(/^0+/, "")
+                                                : "0"}
+                                            %
+                                        </tspan>
+                                        <tspan
+                                            x={viewBox.cx}
+                                            y={(viewBox.cy || 0) + 24}
+                                            className="fill-white/70"
+                                        >
+                                            Space used
+                                        </tspan>
+                                    </text>
+                                    );
+                                }
                             }}
                         />
                     </PolarRadiusAxis>

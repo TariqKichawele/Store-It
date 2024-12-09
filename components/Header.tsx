@@ -3,6 +3,7 @@ import React from 'react'
 import { Button } from './ui/button';
 import Image from 'next/image';
 import FileUploader from './FileUploader';
+import Search from './Search';
 
 const Header = ({
   userId,
@@ -13,7 +14,7 @@ const Header = ({
 }) => {
   return (
     <header className="header">
-      Search
+      <Search />
       <div className="header-wrapper">
         <FileUploader ownerId={userId} accountId={accountId} />
         <form
