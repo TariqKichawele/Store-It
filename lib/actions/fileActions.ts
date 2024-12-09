@@ -1,6 +1,6 @@
 'use server';
 
-import { createAdminClient } from "../appwrite";
+import { createAdminClient, createSessionClient } from "../appwrite";
 import { InputFile } from "node-appwrite/file";
 import { appwriteConfig } from "../appwrite/config";
 import { ID, Models, Query } from "node-appwrite";
@@ -185,6 +185,49 @@ export const updateFileUsers = async ({
         return parseStringify(updatedFile);
     } catch (error) {
         handleError(error, 'Failed to update file users');
+    }
+}
+
+export async function getTotalSpaceUsed() {
+    try {
+        const { database } = await createSessionClient();
+
+        const currentUser = await getCurrentUser();
+        if(!currentUser) throw new Error('User not found');
+    
+        const files = await database.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.filesCollectionId,
+            [Query.equal("owner", [currentUser.$id])]
+        );
+
+        const totalSpace = {
+            image: { size: 0, latestDate: "" },
+            document: { size: 0, latestDate: "" },
+            video: { size: 0, latestDate: "" },
+            audio: { size: 0, latestDate: "" },
+            other: { size: 0, latestDate: "" },
+            used: 0,
+            all: 2 * 1024 * 1024 * 1024
+        };
+
+        files.documents.forEach((file) => {
+            const fileType = file.type as FileType;
+
+            totalSpace[fileType].size += file.size;
+            totalSpace.used += file.size;
+
+            if(
+                !totalSpace[fileType].latestDate || 
+                new Date(file.$updatedAt) > new Date(totalSpace[fileType].latestDate)
+            ) {
+                totalSpace[fileType].latestDate = file.$updatedAt;
+            }
+        });
+
+        return parseStringify(totalSpace);
+    } catch (error) {
+        handleError(error, 'Failed to get total space used');
     }
 }
 
